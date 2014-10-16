@@ -29,3 +29,10 @@ to view it.
 
 And then you can add `cat cool.ansi` to your `~/.bashrc` or `~/.zshrc` to have
 it print out when you open a terminal.
+
+Notes
+-----
+
+img-cat is still under active development. Planned options include the option
+to remove padding around the image, grayscale output, and possibly 16-color
+mode (using the terminal-defined palette).
