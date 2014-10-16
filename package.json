@@ -1,6 +1,25 @@
 {
   "name": "image-cat",
   "version": "0.0.1",
+  "description": "Displays images in the terminal using 256-color mode.",
+  "keywords": [
+    "console",
+    "terminal",
+    "image",
+    "pixel",
+    "gif",
+    "jpeg",
+    "png"
+  ],
+  "homepage": "https://github.com/saikobee/img-cat",
+  "license": "MIT",
+  "author": "Brian Mock <brian@mockbrian.com> (http://mockbrian.com/)",
+  "bin": "./main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saikobee/img-cat"
+  },
+  "preferGlobal": true,
   "dependencies": {
     "x256": "0.0.2",
     "get-pixels": "^3.0.1"
