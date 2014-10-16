@@ -1,0 +1,8 @@
+{
+  "name": "image-cat",
+  "version": "0.0.1",
+  "dependencies": {
+    "x256": "0.0.2",
+    "get-pixels": "^3.0.1"
+  }
+}
