@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var getPixels = require('get-pixels');
 var x256 = require('x256');
 
