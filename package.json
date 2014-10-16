@@ -1,5 +1,5 @@
 {
-  "name": "image-cat",
+  "name": "img-cat",
   "version": "0.0.1",
   "description": "Displays images in the terminal using 256-color mode.",
   "keywords": [
