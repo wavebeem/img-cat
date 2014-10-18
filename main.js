@@ -127,16 +127,16 @@ function show_image(path) {
 }
 
 function main() {
+    // Grab all possible files.
+    var paths = (argv._ || []).concat(argv['--'] || []);
+
     if (argv.v || argv.version) { version(); }
     if (argv.copyright) { copyright(); }
 
     // Show usage if they ask for help or do not supply any arguments.
-    if (argv.h || argv.help || argv['?'] || args.length === 0) {
+    if (argv.h || argv.help || argv['?'] || paths.length === 0) {
         usage();
     }
-
-    // Grab all possible files.
-    var paths = (argv._ || []).concat(argv['--'] || []);
 
     // Fun time!
     paths.forEach(show_image);
