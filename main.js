@@ -6,7 +6,10 @@ var minimist = require('minimist');
 
 var pkg = require('./package.json');
 
-function escaped(s) { return '\033[' + [].join.call(arguments, ';') + 'm' }
+function escaped(s) {
+    var s = [].join.call(arguments, ';');
+    return '\033[' + s + 'm';
+}
 
 var BG_CLEAR = escaped(0);
 var BG_BOLD = escaped(1);
@@ -22,19 +25,36 @@ var colors = {
         white: fg_256(0xff, 0xff, 0xff)
     },
     bg: {
+        green_1: bg_256(0x00, 0x88, 0x00),
+        green_2: bg_256(0x00, 0x66, 0x00),
+
         red_1: bg_256(0x88, 0x00, 0x00),
         red_2: bg_256(0xaa, 0x00, 0x00),
         red_3: bg_256(0xcc, 0x00, 0x00),
     }
 };
 
+function box(title, body) {
+    function prefix(s, xs) {
+        return s + xs.join('\n' + s);
+    }
+
+    var pre = BG_BOLD + colors.fg.white;
+    var tbg = pre + colors.bg.green_2;
+    var bbg = pre + colors.bg.green_1;
+
+    console.log(prefix(tbg, title));
+    console.log(prefix(bbg, body));
+}
+
 function usage() {
-    console.log([
-        'usage: img-cat [options] [--] [images]',
-        '  -h, --help, -?       display this help text',
-        '  -v, --version        display version string',
-        '  --copyright          display copyright information',
-    ].join('\n'));
+    box([
+        ' usage: img-cat [options] [--] [images]               ',
+    ], [
+        '   -h, --help, -?       display this help text        ',
+        '   -v, --version        display version string        ',
+        '   --copyright          display copyright information ',
+    ]);
     process.exit();
 }
 
@@ -44,11 +64,12 @@ function version() {
 }
 
 function copyright() {
-    console.log([
-        'Copyright (c) 2014 Brian Mock',
-        'MIT license <http://opensource.org/licenses/MIT>',
-        'There is NO WARRANTY, to the extent permitted by law.'
-    ].join('\n'));
+    box([
+        ' Copyright (c) 2014 Brian Mock                         ',
+    ], [
+        ' MIT license <http://opensource.org/licenses/MIT>      ',
+        ' There is NO WARRANTY, to the extent permitted by law. ',
+    ]);
     process.exit();
 }
 
@@ -57,12 +78,9 @@ function die(s) {
     console.error(''
         + BG_BOLD
         + colors.fg.white
-        + colors.bg.red_1
-        + ' img-cat: '
-        + colors.bg.red_2
-        + ' error: '
-        + colors.bg.red_3
-        + ' ' + s + ' '
+        + colors.bg.red_1 + ' img-cat: '
+        + colors.bg.red_2 + ' error: '
+        + colors.bg.red_3 + ' ' + s + ' '
         + BG_CLEAR
     );
     process.exit(1);
