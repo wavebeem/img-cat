@@ -77,6 +77,12 @@ function bg_256(r, g, b) { return '\033[48;5;' + x256(r, g, b) + 'm' }
 function fg_256(r, g, b) { return '\033[38;5;' + x256(r, g, b) + 'm' }
 
 function process_pixels(pixels) {
+    // Animated GIFs are 4D ([frames, w, h, color]),
+    // instead of 3D ([w, h, color]).
+    if (pixels.shape.length === 4) {
+        pixels = pixels.pick(0, null, null, null);
+    }
+
     var w = pixels.shape[0];
     var h = pixels.shape[1];
 
