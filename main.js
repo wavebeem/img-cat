@@ -6,14 +6,27 @@ var minimist = require('minimist');
 
 var pkg = require('./package.json');
 
-var BG_CLEAR = '\033[0m';
-var BG_BOLD = '\033[1m';
+function escaped(s) { return '\033[' + [].join.call(arguments, ';') + 'm' }
+
+var BG_CLEAR = escaped(0);
+var BG_BOLD = escaped(1);
 var NL = '\n';
 var PX = '  ';
 
 var args = process.argv.slice(2);
 var argv = minimist(args);
 var COLS = ~~process.stdout.columns;
+
+var colors = {
+    fg: {
+        white: fg_256(0xff, 0xff, 0xff)
+    },
+    bg: {
+        red_1: bg_256(0x88, 0x00, 0x00),
+        red_2: bg_256(0xaa, 0x00, 0x00),
+        red_3: bg_256(0xcc, 0x00, 0x00),
+    }
+};
 
 function usage() {
     console.log([
@@ -43,12 +56,12 @@ function die(s) {
     // Red gradient along the error message.
     console.error(''
         + BG_BOLD
-        + fg_256(0xff, 0xff, 0xff)
-        + bg_256(0x88, 0x00, 0x00)
+        + colors.fg.white
+        + colors.bg.red_1
         + ' img-cat: '
-        + bg_256(0xaa, 0x00, 0x00)
+        + colors.bg.red_2
         + ' error: '
-        + bg_256(0xcc, 0x00, 0x00)
+        + colors.bg.red_3
         + ' ' + s + ' '
         + BG_CLEAR
     );
@@ -73,12 +86,11 @@ function bg(r, g, b, a) {
     return a === 255 ? bg_256(r, g, b) : '';
 }
 
-function bg_256(r, g, b) { return '\033[48;5;' + x256(r, g, b) + 'm' }
-function fg_256(r, g, b) { return '\033[38;5;' + x256(r, g, b) + 'm' }
+function bg_256(r, g, b) { return escaped(48, 5, x256(r, g, b)) }
+function fg_256(r, g, b) { return escaped(38, 5, x256(r, g, b)) }
 
 function process_pixels(pixels) {
-    // Animated GIFs are 4D ([frames, w, h, color]),
-    // instead of 3D ([w, h, color]).
+    // Grab the first frame of an animated GIF.
     if (pixels.shape.length === 4) {
         pixels = pixels.pick(0, null, null, null);
     }
