@@ -35,16 +35,16 @@ var colors = {
 };
 
 function box(title, body) {
-    function prefix(s, xs) {
-        return s + xs.join('\n' + s);
+    function wrap(a, b, xs) {
+        return a + xs.join(b + '\n' + a) + b;
     }
 
     var pre = BG_BOLD + colors.fg.white;
     var tbg = pre + colors.bg.green_2;
     var bbg = pre + colors.bg.green_1;
 
-    console.log(prefix(tbg, title));
-    console.log(prefix(bbg, body));
+    console.log(wrap(tbg, BG_CLEAR, title));
+    console.log(wrap(bbg, BG_CLEAR, body));
 }
 
 function usage() {
@@ -132,6 +132,7 @@ function process_pixels(pixels) {
             s += bg(r, g, b, a);
             s += PX;
         }
+        s += BG_CLEAR;
         s += NL;
     }
     console.log(s);
