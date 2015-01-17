@@ -11,10 +11,11 @@
     "jpeg",
     "png"
   ],
+  "main": "src/img-cat.js",
   "homepage": "https://github.com/saikobee/img-cat",
   "license": "MIT",
   "author": "Brian Mock <brian@mockbrian.com> (http://mockbrian.com/)",
-  "bin": "./main.js",
+  "bin": "./src/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/saikobee/img-cat"
