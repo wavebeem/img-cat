@@ -22,8 +22,9 @@
   },
   "preferGlobal": true,
   "dependencies": {
-    "x256": "0.0.2",
+    "es6-promise": "^2.0.1",
     "get-pixels": "^3.0.1",
-    "minimist": "^1.1.0"
+    "minimist": "^1.1.0",
+    "x256": "0.0.2"
   }
 }
