@@ -11,21 +11,6 @@ var BG = require('./bg');
 var NL = '\n';
 var PX = '  ';
 
-var COLS = ~~process.stdout.columns;
-
-function assert_size(w, h) {
-    if (COLS <= 0) return;
-    var max = ~~(COLS / 2) - 4;
-    // Show an error if the image would line wrap since it's really jarring.
-    if (w > max) {
-        throw new Error(
-            'image is too large ' +
-            '(' + w + 'x' + h + '); ' +
-            'must be ' + max + ' or fewer pixels wide'
-        );
-    }
-}
-
 function bg(r, g, b, a) {
     // Don't print anything to leave the background transparent.
     return a === 255 ? bg_256(r, g, b) : '';
@@ -39,8 +24,6 @@ function from_pixels(pixels) {
 
     var w = pixels.shape[0];
     var h = pixels.shape[1];
-
-    assert_size(w, h);
 
     var s = NL;
     for (var j = 0; j < h; j++) {
