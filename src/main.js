@@ -6,9 +6,19 @@ var escaped = require('./escaped');
 var bg_256 = require('./bg-256');
 var fg_256 = require('./fg-256');
 var BG = require('./bg');
+var pkg = require('../package.json');
 
 var args = process.argv.slice(2);
-var argv = minimist(args);
+var argv = minimist(args, {
+    alias: {
+        help: ['h', '?'],
+        version: ['v'],
+        'no-padding': ['n']
+    },
+    boolean: [
+        'no-padding'
+    ]
+});
 
 var colors = {
     fg: {
@@ -43,6 +53,7 @@ function usage() {
     ], [
         '   -h, --help, -?       display this help text        ',
         '   -v, --version        display version string        ',
+        '   -n, --no-padding     do not pad image output       ',
         '   --copyright          display copyright information ',
     ]);
     process.exit();
@@ -80,18 +91,22 @@ function main() {
     // Grab all possible files.
     var paths = (argv._ || []).concat(argv['--'] || []);
 
-    if (argv.v || argv.version) { version(); }
+    if (argv.version) { version(); }
     if (argv.copyright) { copyright(); }
 
     // Show usage if they ask for help or do not supply any arguments.
-    if (argv.h || argv.help || argv['?'] || paths.length === 0) {
+    if (argv.help || paths.length === 0) {
         usage();
     }
+
+    var imgOpts = {
+        padding: !(argv.n || argv['no-padding'])
+    };
 
     // Fun time!
     paths.forEach(function(p) {
         imgcat
-            .fromFile(p)
+            .fromFile(p, imgOpts)
             .then(function(s) { console.log(s); })
             .catch(function(e) { die(e.message); });
     });

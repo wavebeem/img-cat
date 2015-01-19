@@ -3,7 +3,6 @@ var x256 = require('x256');
 
 var Promise = require('es6-promise').Promise;
 
-var pkg = require('../package.json');
 var escaped = require('./escaped');
 var bg_256 = require('./bg-256');
 var BG = require('./bg');
@@ -16,7 +15,9 @@ function bg(r, g, b, a) {
     return a === 255 ? bg_256(r, g, b) : '';
 }
 
-function from_pixels(pixels) {
+function from_pixels(pixels, opts) {
+    opts = opts || {};
+
     // Grab the first frame of an animated GIF.
     if (pixels.shape.length === 4) {
         pixels = pixels.pick(0, null, null, null);
@@ -25,10 +26,15 @@ function from_pixels(pixels) {
     var w = pixels.shape[0];
     var h = pixels.shape[1];
 
-    var s = NL;
+    var s = '';
+    if (opts.padding) {
+        s += NL;
+    }
     for (var j = 0; j < h; j++) {
         s += BG.CLEAR;
-        s += PX;
+        if (opts.padding) {
+            s += PX;
+        }
         for (var i = 0; i < w; i++) {
             var r = pixels.get(i, j, 0);
             var g = pixels.get(i, j, 1);
@@ -46,14 +52,14 @@ function from_pixels(pixels) {
     return s;
 }
 
-function from_file(path) {
+function from_file(path, opts) {
     return new Promise(function(resolve, reject) {
         getPixels(path, function(err, pixels) {
             if (err) {
                 reject(new Error('could not read: ' + path));
             }
             try {
-                resolve(from_pixels(pixels));
+                resolve(from_pixels(pixels, opts));
             } catch (e) {
                 reject(e);
             }
