@@ -32,3 +32,16 @@ to view it.
 
 And then you can add `cat cool.ansi` to your `~/.bashrc` or `~/.zshrc` to have
 it print out when you open a terminal.
+
+Library
+-------
+
+`img-cat` can also be used as a library. *Example:*
+
+You can already require `img-cat` as a library.
+
+```javascript
+var imgcat = require("imgcat");
+imgcat.fromFile("/path/to/my/file.png")
+    .then(function(x) { console.log(x); });
+```
