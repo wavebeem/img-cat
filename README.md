@@ -36,9 +36,9 @@ it print out when you open a terminal.
 Library
 -------
 
-`img-cat` can also be used as a library. *Example:*
+`img-cat` can also be used as a library.
 
-You can already require `img-cat` as a library.
+*Example:*
 
 ```javascript
 var imgcat = require("imgcat");
