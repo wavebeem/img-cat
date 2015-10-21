@@ -41,7 +41,7 @@ Library
 *Example:*
 
 ```javascript
-var imgcat = require("imgcat");
+var imgcat = require("img-cat");
 imgcat.fromFile("/path/to/my/file.png")
     .then(function(x) { console.log(x); });
 ```
