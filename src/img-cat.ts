@@ -61,6 +61,8 @@ export async function fromFile(
   path: string,
   opts: ImgCatOptions
 ): Promise<string> {
+  // TODO: Assert the path exists on the local file system, so we don't load
+  // from the internet... OR we could replace this library maybe...
   const pixels = await getPixelsAsync(path, "");
   return fromPixels(pixels, opts);
 }

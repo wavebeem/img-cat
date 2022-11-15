@@ -40,7 +40,6 @@ There is NO WARRANTY, to the extent permitted by law.
 }
 
 async function main() {
-  // Grab all possible files.
   const paths = [...(argv._ || []), ...(argv["--"] || [])];
   if (argv.version) {
     version();
@@ -48,7 +47,6 @@ async function main() {
   if (argv.copyright) {
     copyright();
   }
-  // Show usage if they ask for help or do not supply any arguments.
   if (argv.help || paths.length === 0) {
     usage();
   }
