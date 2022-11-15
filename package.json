@@ -1,6 +1,6 @@
 {
   "name": "img-cat",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "Displays images in the terminal using 256-color mode.",
   "keywords": [
     "console",
@@ -11,20 +11,27 @@
     "jpeg",
     "png"
   ],
-  "main": "src/img-cat.js",
-  "homepage": "https://github.com/saikobee/img-cat",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "main": "./dist/src/index.js",
+  "homepage": "https://github.com/wavebeem/img-cat",
   "license": "MIT",
-  "author": "Brian Mock <brian@mockbrian.com> (http://mockbrian.com/)",
-  "bin": "./src/main.js",
+  "author": "Brian Mock <brian@wavebeem.com> (https://wavebeem.com)",
+  "bin": "./dist/src/main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/saikobee/img-cat"
+    "url": "https://github.com/wavebeem/img-cat"
   },
-  "preferGlobal": true,
   "dependencies": {
-    "es6-promise": "^2.0.1",
+    "@types/get-pixels": "^3.3.2",
     "get-pixels": "^3.0.1",
     "minimist": "^1.1.0",
     "x256": "0.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4",
+    "ndarray": "^1.0.19"
   }
 }
