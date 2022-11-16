@@ -2,6 +2,12 @@
 
 ## 0.1.0 (2022-11-15)
 
+### Added
+
+- (`-t`, `--true-color`) True color (24-bit RGB) support
+- New argument parsing system
+
 ### Breaking
 
-- `img-cat` is once again not available for import as a module
+- Importing as a module is no longer supported
+- URLs can't be displayed, only local files
