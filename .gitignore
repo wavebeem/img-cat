@@ -1,2 +1,4 @@
-/node_modules
-/npm-debug.log
+node_modules
+npm-debug.log
+dist
+img-cat-*.tgz
