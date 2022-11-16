@@ -2,6 +2,7 @@ import getPixels from "get-pixels";
 import { NdArray } from "ndarray";
 import * as util from "util";
 import x256 from "x256";
+import * as fs from "fs";
 
 const getPixelsAsync = util.promisify(getPixels);
 
@@ -38,12 +39,12 @@ function fromPixels(pixels: NdArray<Uint8Array>, opts: ImgCatOptions): string {
   if (opts.padding) {
     ret += "\n";
   }
-  for (var j = 0; j < height; j++) {
+  for (let j = 0; j < height; j++) {
     ret += bgClear;
     if (opts.padding) {
       ret += charPixel;
     }
-    for (var i = 0; i < width; i++) {
+    for (let i = 0; i < width; i++) {
       const r = pixels.get(i, j, 0);
       const g = pixels.get(i, j, 1);
       const b = pixels.get(i, j, 2);
@@ -58,11 +59,12 @@ function fromPixels(pixels: NdArray<Uint8Array>, opts: ImgCatOptions): string {
 }
 
 export async function fromFile(
-  path: string,
+  file: string,
   opts: ImgCatOptions
 ): Promise<string> {
-  // TODO: Assert the path exists on the local file system, so we don't load
-  // from the internet... OR we could replace this library maybe...
-  const pixels = await getPixelsAsync(path, "");
+  if (!fs.existsSync(file)) {
+    throw new Error(`no such file "${file}"`);
+  }
+  const pixels = await getPixelsAsync(file, "");
   return fromPixels(pixels, opts);
 }

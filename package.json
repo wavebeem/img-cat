@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "@types/get-pixels": "^3.3.2",
+    "cmd-ts": "^0.11.0",
     "get-pixels": "^3.0.1",
-    "minimist": "^1.1.0",
     "x256": "0.0.2"
   },
   "devDependencies": {
