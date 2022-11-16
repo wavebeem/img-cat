@@ -9,7 +9,7 @@ import {
 } from "cmd-ts";
 import { File } from "cmd-ts/batteries/fs";
 import { version as pkgVersion } from "../package.json";
-import { fromFile } from "./img-cat";
+import { fromFile } from "./lib";
 
 const cmd = command({
   name: "img-cat",
