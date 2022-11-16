@@ -1,7 +1,7 @@
 {
   "name": "img-cat",
   "version": "0.1.0",
-  "description": "Displays images in the terminal using 256-color mode.",
+  "description": "Displays images in the terminal",
   "keywords": [
     "console",
     "terminal",
@@ -13,7 +13,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "postversion": "git push origin HEAD --follow-tags"
   },
   "main": "./dist/src/index.js",
   "homepage": "https://github.com/wavebeem/img-cat",
