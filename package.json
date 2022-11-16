@@ -11,6 +11,10 @@
     "jpeg",
     "png"
   ],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",

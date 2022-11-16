@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 (2022-11-15)
+
+### Improved
+
+- Removed unused files from the package
+
 ## 0.1.0 (2022-11-15)
 
 ### Added
