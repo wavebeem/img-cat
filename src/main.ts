@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import {
+  binary,
   command,
+  flag,
   positional,
   restPositionals,
-  flag,
   run,
-  binary,
 } from "cmd-ts";
 import { File } from "cmd-ts/batteries/fs";
 import { version as pkgVersion } from "../package.json";
@@ -27,13 +27,18 @@ const cmd = command({
       short: "n",
       description: "display image without any padding",
     }),
+    trueColor: flag({
+      long: "true-color",
+      short: "t",
+      description: "display image using true color (24-bit)",
+    }),
   },
-  async handler(args) {
-    const files = [args.firstFile, ...args.otherFiles];
+  async handler({ firstFile, otherFiles, noPadding, trueColor }) {
+    const files = [firstFile, ...otherFiles];
     for (const filename of files) {
       const str = await fromFile(filename, {
-        padding: !args.noPadding,
-        trueColor: false,
+        padding: !noPadding,
+        trueColor: trueColor,
       });
       console.log(str);
     }

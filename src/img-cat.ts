@@ -2,7 +2,6 @@ import getPixels from "get-pixels";
 import { NdArray } from "ndarray";
 import * as util from "util";
 import x256 from "x256";
-import * as fs from "fs";
 
 const getPixelsAsync = util.promisify(getPixels);
 
@@ -12,6 +11,10 @@ function bg256(r: number, g: number, b: number): string {
   return escaped(48, 5, x256(r, g, b));
 }
 
+function bgTrueColor(r: number, g: number, b: number): string {
+  return escaped(48, 2, r, g, b);
+}
+
 const bgClear = escaped(0);
 
 function escaped(...str: (string | number)[]): string {
@@ -19,13 +22,24 @@ function escaped(...str: (string | number)[]): string {
   return `\x1b[${txt}m`;
 }
 
-function bg(r: number, g: number, b: number, a: number): string {
-  return a === 255 ? bg256(r, g, b) : bgClear;
+function bg(
+  trueColor: boolean,
+  r: number,
+  g: number,
+  b: number,
+  a: number
+): string {
+  if (a < 255) {
+    return bgClear;
+  }
+  if (trueColor) {
+    return bgTrueColor(r, g, b);
+  }
+  return bg256(r, g, b);
 }
 
 interface ImgCatOptions {
   padding: boolean;
-  // TODO: Support true color if you ask for it
   trueColor: boolean;
 }
 
@@ -49,7 +63,7 @@ function fromPixels(pixels: NdArray<Uint8Array>, opts: ImgCatOptions): string {
       const g = pixels.get(i, j, 1);
       const b = pixels.get(i, j, 2);
       const a = pixels.get(i, j, 3);
-      ret += bg(r, g, b, a);
+      ret += bg(opts.trueColor, r, g, b, a);
       ret += charPixel;
     }
     ret += bgClear;
@@ -62,9 +76,6 @@ export async function fromFile(
   file: string,
   opts: ImgCatOptions
 ): Promise<string> {
-  if (!fs.existsSync(file)) {
-    throw new Error(`no such file "${file}"`);
-  }
   const pixels = await getPixelsAsync(file, "");
   return fromPixels(pixels, opts);
 }
